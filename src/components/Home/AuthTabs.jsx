@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-import './authTabs.css'; // Make sure to import your CSS file
+import './authTabs.css'; 
 
 function AuthTabs({setShowAuthTabs}) {
     const [activeTab, setActiveTab] = useState('login');
