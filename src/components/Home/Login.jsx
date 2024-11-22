@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Cookies from 'js-cookie';
-import './login.css'; // Ensure your CSS is correctly imported
+import './login.css'; // Ensuring your CSS is correctly imported
 import { useNavigate } from 'react-router-dom';
 import { FetchedContext } from '../../App';
 
@@ -25,7 +25,7 @@ function Login({ setIsLogin }) {
         },
       });
       const data = await response.json();
-      setTasks(data);  // Update context with the new tasks
+      setTasks(data);  // Updating context with the new tasks
     } catch (error) {
       notify("Error Fetching Tasks from API!", "error");
     }
@@ -35,10 +35,10 @@ function Login({ setIsLogin }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Set loading to true when the request starts
+    // Setting loading to true when the request starts
     setIsLoading(true);
-    setErrorMessage(''); // Clear any previous errors
-    setSuccessMessage(''); // Clear any previous success messages
+    setErrorMessage(''); // Clearing any previous errors
+    setSuccessMessage(''); // Clearing any previous success messages
 
     try {
       // Sending POST request using fetch API
@@ -55,34 +55,34 @@ function Login({ setIsLogin }) {
 
       const data = await response.json();
 
-      // If login is successful and there's a token, store it in cookies
+      // If login is successful and there's a token, storing it in cookies
       if (response.ok && data.token) {
-        Cookies.set('token', data.token, { expires: 7 }); // Store token for 7 days
+        Cookies.set('token', data.token, { expires: 7 }); // Storing token for 7 days
         fetchData()
         setSuccessMessage('Login successful!');
         navigate('/')
-        setErrorMessage(''); // Clear any error messages
+        setErrorMessage(''); // Clearing any error messages
 
-        // Clear form fields after successful login
+        // Clearing form fields after successful login
         setEmail('');
         setPassword('');
       } else {
-        // Handle error response if not successful
+        // Handling error response if not successful
         setErrorMessage(data.message || 'Login failed');
-        setSuccessMessage(''); // Clear any success messages
+        setSuccessMessage(''); // Clearing any success messages
       }
     } catch (error) {
-      // Handle network or other errors
+      // Handling network or other errors
       setErrorMessage('An error occurred, please try again later.');
-      setSuccessMessage(''); // Clear any success messages
+      setSuccessMessage(''); // Clearing any success messages
     } finally {
-      // Set loading to false when the request is done
+      // Setting loading to false when the request is done
       setIsLoading(false);
     }
   };
 
   const handleClose = () => {
-    setIsLogin(false); // Close the login form when close button is clicked
+    setIsLogin(false); // Closing the login form when close button is clicked
   };
 
   return (
@@ -121,7 +121,7 @@ function Login({ setIsLogin }) {
           {errorMessage && <div className="error-message">{errorMessage}</div>}
           {successMessage && <div className="success-message">{successMessage}</div>}
 
-          {/* Show loading indicator */}
+          {/* Showing loading indicator */}
           {isLoading ? (
             <div className="loading-message">Logging in...</div>
           ) : (
