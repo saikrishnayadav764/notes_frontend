@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext, useEffect } from "react";
+import React, { useState, createContext, useContext, useEffect, useLayoutEffect } from "react";
 import "./DashboardPage.styles.css";
 import DashNav from "./DashNav";
 import DashboardContainer from "./DashboardContainer";
@@ -14,31 +14,32 @@ const DashContext = createContext();
 const DashboardPage = () => {
   // const [page, setPage] = useState(<DashboardContainer/>)
   const [isDash, setIsDash] = useState(true);
-  const navigate = useNavigate()
-  const { openUserAccount, setOpenUserAccount, tasks, setTasks, notify } =
+  const navigate = useNavigate();
+  const [tasks, setTasks] = useState(null);
+  const { openUserAccount, setOpenUserAccount, notify } =
     useContext(FetchedContext);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const token = Cookies.get("token");
-  //     try {
-  //       const response = await fetch("https://oscowbackend-production.up.railway.app/api/todos", {
-  //         method: "GET",
-  //         headers: {
-  //           "Authorization": `Bearer ${token}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
-  //       const data = await response.json();
-  //       setTasks(data);  // Update context with the new tasks
-  //     } catch (error) {
-  //       notify("Error Fetching Tasks from API!", "error");
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = Cookies.get("token");
+      try {
+        const response = await fetch("https://oscowbackend-production.up.railway.app/api/todos", {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        setTasks(data);  // Update context with the new tasks
+      } catch (error) {
+        // notify("Error Fetching Tasks from API!", "error");
+      }
+    };
 
-  //   fetchData();  // Re-fetch data when the route changes
+    fetchData();  // Re-fetch data when the route changes
 
-  // }, []);
+  }, []);
 
   return (
     <>
@@ -47,8 +48,10 @@ const DashboardPage = () => {
           <DashNav />
 
           <div className="dash-container-content">
-            {isDash ? <DashboardContainer /> : <TasksContainer />}
-            <UserAccount />
+            {isDash && tasks && <DashboardContainer tasks={tasks}/>}
+            {!isDash && tasks &&  <TasksContainer />}
+            {/* {isDash ? <DashboardContainer tasks={tasks}/> : <TasksContainer />} */}
+            { tasks &&  <UserAccount tasks={tasks}/>}
           </div>
         </div>
       </DashContext.Provider>

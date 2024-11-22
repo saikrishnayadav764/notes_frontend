@@ -4,34 +4,34 @@ import PieChartComponent from "./Pie";
 import { FetchedContext } from "../../../App";
 import Cookies from "js-cookie";
 
-const DashboardContainer = () => {
-  const {tasks=[], setTasks, notify } = useContext(FetchedContext) || {};
+const DashboardContainer = ({tasks}) => {
+  const { setTasks, notify } = useContext(FetchedContext) || {};
 
  
   let completed = tasks ? tasks.filter(task => task.completed).length : 0;
   let pending = tasks ? tasks.filter(task => !task.completed).length : 0;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = Cookies.get("token");
-      try {
-        const response = await fetch("https://oscowbackend-production.up.railway.app/api/todos", {
-          method: "GET",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
-        setTasks(data);  // Update context with the new tasks
-      } catch (error) {
-        notify("Error Fetching Notes from API!", "error");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const token = Cookies.get("token");
+  //     try {
+  //       const response = await fetch("https://oscowbackend-production.up.railway.app/api/todos", {
+  //         method: "GET",
+  //         headers: {
+  //           "Authorization": `Bearer ${token}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       });
+  //       const data = await response.json();
+  //       setTasks(data);  // Update context with the new tasks
+  //     } catch (error) {
+  //       notify("Error Fetching Notes from API!", "error");
+  //     }
+  //   };
 
-    fetchData();  // Re-fetch data when the route changes
+  //   fetchData();  // Re-fetch data when the route changes
 
-  }, []);
+  // }, []);
 
   return (
     <div className="dashboard-container" id="dash-container">
@@ -56,7 +56,7 @@ const DashboardContainer = () => {
       <h2 className="chart-heading">
         Performance
       </h2>
-      <PieChartComponent completed={completed} pending={pending}/>
+      <PieChartComponent tasks ={tasks} completed={completed} pending={pending}/>
     </div>
   );
 };

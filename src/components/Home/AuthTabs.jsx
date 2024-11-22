@@ -6,7 +6,7 @@ import './authTabs.css';
 function AuthTabs({setShowAuthTabs}) {
     const [activeTab, setActiveTab] = useState('login');
     const [username, setUsername] = useState('');
-    const [showModal, setShowModal] = useState(true); // State to control modal visibility
+    const [showModal, setShowModal] = useState(true); 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -30,18 +30,18 @@ function AuthTabs({setShowAuthTabs}) {
         setErrorMessage("")
         setIsLoading(false)
         setShowAuthTabs(false)
-        setShowModal(false); // Closing the modal
+        setShowModal(false); 
     };
 
-    if (!showModal) return null; // Not rendering anything if modal is closed
+    if (!showModal) return null; 
 
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
 
         // Set loading to true when the request starts
         setIsLoading(true);
-        setErrorMessage(''); // Clearing any previous errors
-        setSuccessMessage(''); // Clearing any previous success messages
+        setErrorMessage(''); // Clear any previous errors
+        setSuccessMessage(''); // Clear any previous success messages
 
         try {
             // Sending POST request using fetch API
@@ -58,27 +58,27 @@ function AuthTabs({setShowAuthTabs}) {
 
             const data = await response.json();
 
-            // If login is successful and there's a token, storing it in cookies
+            // If login is successful and there's a token, store it in cookies
             if (response.ok && data.token) {
-                Cookies.set('token', data.token, { expires: 7 }); // Storing token for 7 days
+                Cookies.set('token', data.token, { expires: 7 }); // Store token for 7 days
                 setSuccessMessage('Login successful!');
                 navigate('/')
-                setErrorMessage(''); // Clearing any error messages
+                setErrorMessage(''); // Clear any error messages
 
-                // Clearing form fields after successful login
+                // Clear form fields after successful login
                 setEmail('');
                 setPassword('');
             } else {
-                // Handling error response if not successful
+                // Handle error response if not successful
                 setErrorMessage(data.message || 'Login failed');
-                setSuccessMessage(''); // Clearing any success messages
+                setSuccessMessage(''); // Clear any success messages
             }
         } catch (error) {
             // Handle network or other errors
             setErrorMessage('An error occurred, please try again later.');
-            setSuccessMessage(''); // Clearing any success messages
+            setSuccessMessage(''); // Clear any success messages
         } finally {
-            // Setting loading to false when the request is done
+            // Set loading to false when the request is done
             setIsLoading(false);
         }
     };
@@ -86,10 +86,10 @@ function AuthTabs({setShowAuthTabs}) {
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
 
-        // Setting loading to true when the request starts
+        // Set loading to true when the request starts
         setIsLoading(true);
-        setErrorMessage(''); // Clearing any previous errors
-        setSuccessMessage(''); // Clearing any previous success messages
+        setErrorMessage(''); // Clear any previous errors
+        setSuccessMessage(''); // Clear any previous success messages
 
         try {
             // Sending POST request using fetch API
@@ -107,27 +107,27 @@ function AuthTabs({setShowAuthTabs}) {
 
             const data = await response.json();
 
-            // If registration is successful and there's a token, storing it in cookies
+            // If registration is successful and there's a token, store it in cookies
             if (response.ok && data.token) {
-                Cookies.set('token', data.token, { expires: 7 }); // Storing token for 7 days
+                Cookies.set('token', data.token, { expires: 7 }); // Store token for 7 days
                 setSuccessMessage('Registration successful!');
-                setErrorMessage(''); // Clearing any error messages
+                setErrorMessage(''); // Clear any error messages
 
-                // Clearing form fields after successful registration
+                // Clear form fields after successful registration
                 setUsername('');
                 setEmail('');
                 setPassword('');
             } else {
-                // Handling error response if not successful
+                // Handle error response if not successful
                 setErrorMessage(data.message || 'Registration failed');
-                setSuccessMessage(''); // Clearing any success messages
+                setSuccessMessage(''); // Clear any success messages
             }
         } catch (error) {
-            // Handling network or other errors
+            // Handle network or other errors
             setErrorMessage('An error occurred, please try again later.');
-            setSuccessMessage(''); // Clearing any success messages
+            setSuccessMessage(''); // Clear any success messages
         } finally {
-            // Setting loading to false when the request is done
+            // Set loading to false when the request is done
             setIsLoading(false);
         }
     };

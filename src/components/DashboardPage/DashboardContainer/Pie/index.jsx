@@ -4,8 +4,8 @@ import * as am5percent from "@amcharts/amcharts5/percent";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { FetchedContext } from '../../../../App';
 
-function PieChartComponent(props) {
-  const { tasks=[] } = useContext(FetchedContext)|| { tasks: [] };
+function PieChartComponent({tasks}) {
+  // const { tasks=[] } = useContext(FetchedContext)|| { tasks: [] };
 
   useEffect(() => {
         // Check if tasks data is available before rendering the chart

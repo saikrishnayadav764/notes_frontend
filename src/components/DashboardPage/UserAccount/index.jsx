@@ -7,8 +7,8 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 
-const UserAccount = () => {
-  const { tasks =[], setTasks, notify} = useContext(FetchedContext)|| { };
+const UserAccount = ({tasks}) => {
+  const { setTasks, notify} = useContext(FetchedContext)|| { };
   const navigate = useNavigate()
 
   useEffect(() => {

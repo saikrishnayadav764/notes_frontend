@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
-import './register.css'; // Ensuring  CSS is correctly imported
+import './register.css'; // Ensure your CSS is correctly imported
 import { useNavigate } from 'react-router-dom';
 
 function Register({ setIsRegister }) {

@@ -29,7 +29,7 @@ const Home = () => {
       {/* Navbar */}
       <Navbar />
 
-      {/* Conditionally rendering AuthTabs based on state */}
+      {/* Conditionally render AuthTabs based on state */}
       {showAuthTabs && <AuthTabs setShowAuthTabs={setShowAuthTabs} />}
 
       {/* Welcome Text */}
@@ -38,7 +38,7 @@ const Home = () => {
           {/* Welcome Heading */}
           <h1 className="wel-heading">
             Easily Manage Your
-            <span> Personal Notes</span>
+            <span> Daily Tasks</span>
           </h1>
           <div className="wel-quote">
             "You are never too old to set another goal or to dream a new dream."
