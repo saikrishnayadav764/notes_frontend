@@ -26,7 +26,7 @@ const DashNav = () => {
           Dashboard
         </div>
         <div className={`dash-tog-btn tasks-btn ${isDash? "": "active-toggle"}`} onClick={taskClick} >
-          Tasks
+          Notes
         </div>
       </div>
 
