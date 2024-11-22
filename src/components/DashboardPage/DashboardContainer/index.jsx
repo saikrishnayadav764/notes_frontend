@@ -25,7 +25,7 @@ const DashboardContainer = () => {
         const data = await response.json();
         setTasks(data);  // Update context with the new tasks
       } catch (error) {
-        notify("Error Fetching Tasks from API!", "error");
+        notify("Error Fetching Notes from API!", "error");
       }
     };
 
@@ -42,15 +42,15 @@ const DashboardContainer = () => {
       <div className="status-container">
         <div className="total-tasks task-status">
             <h1>{tasks?tasks.length:0}</h1>
-            <p>Total Tasks</p>
+            <p>Total Notes</p>
         </div>
         <div className="pending-tasks task-status">
         <h1>{pending}</h1>
-            <p>Pending Tasks</p>
+            <p>Pending Notes</p>
         </div>
         <div className="completed-tasks task-status">
         <h1>{completed}</h1>
-            <p>Complete Tasks</p>
+            <p>Complete Notes</p>
         </div>
       </div>
       <h2 className="chart-heading">
