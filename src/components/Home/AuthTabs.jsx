@@ -30,18 +30,18 @@ function AuthTabs({setShowAuthTabs}) {
         setErrorMessage("")
         setIsLoading(false)
         setShowAuthTabs(false)
-        setShowModal(false); // Close the modal
+        setShowModal(false); // Closing the modal
     };
 
-    if (!showModal) return null; // Do not render anything if modal is closed
+    if (!showModal) return null; // Not rendering anything if modal is closed
 
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
 
         // Set loading to true when the request starts
         setIsLoading(true);
-        setErrorMessage(''); // Clear any previous errors
-        setSuccessMessage(''); // Clear any previous success messages
+        setErrorMessage(''); // Clearing any previous errors
+        setSuccessMessage(''); // Clearing any previous success messages
 
         try {
             // Sending POST request using fetch API
@@ -58,27 +58,27 @@ function AuthTabs({setShowAuthTabs}) {
 
             const data = await response.json();
 
-            // If login is successful and there's a token, store it in cookies
+            // If login is successful and there's a token, storing it in cookies
             if (response.ok && data.token) {
-                Cookies.set('token', data.token, { expires: 7 }); // Store token for 7 days
+                Cookies.set('token', data.token, { expires: 7 }); // Storing token for 7 days
                 setSuccessMessage('Login successful!');
                 navigate('/')
-                setErrorMessage(''); // Clear any error messages
+                setErrorMessage(''); // Clearing any error messages
 
-                // Clear form fields after successful login
+                // Clearing form fields after successful login
                 setEmail('');
                 setPassword('');
             } else {
-                // Handle error response if not successful
+                // Handling error response if not successful
                 setErrorMessage(data.message || 'Login failed');
-                setSuccessMessage(''); // Clear any success messages
+                setSuccessMessage(''); // Clearing any success messages
             }
         } catch (error) {
             // Handle network or other errors
             setErrorMessage('An error occurred, please try again later.');
-            setSuccessMessage(''); // Clear any success messages
+            setSuccessMessage(''); // Clearing any success messages
         } finally {
-            // Set loading to false when the request is done
+            // Setting loading to false when the request is done
             setIsLoading(false);
         }
     };
@@ -86,10 +86,10 @@ function AuthTabs({setShowAuthTabs}) {
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
 
-        // Set loading to true when the request starts
+        // Setting loading to true when the request starts
         setIsLoading(true);
-        setErrorMessage(''); // Clear any previous errors
-        setSuccessMessage(''); // Clear any previous success messages
+        setErrorMessage(''); // Clearing any previous errors
+        setSuccessMessage(''); // Clearing any previous success messages
 
         try {
             // Sending POST request using fetch API
@@ -107,27 +107,27 @@ function AuthTabs({setShowAuthTabs}) {
 
             const data = await response.json();
 
-            // If registration is successful and there's a token, store it in cookies
+            // If registration is successful and there's a token, storing it in cookies
             if (response.ok && data.token) {
-                Cookies.set('token', data.token, { expires: 7 }); // Store token for 7 days
+                Cookies.set('token', data.token, { expires: 7 }); // Storing token for 7 days
                 setSuccessMessage('Registration successful!');
-                setErrorMessage(''); // Clear any error messages
+                setErrorMessage(''); // Clearing any error messages
 
-                // Clear form fields after successful registration
+                // Clearing form fields after successful registration
                 setUsername('');
                 setEmail('');
                 setPassword('');
             } else {
-                // Handle error response if not successful
+                // Handling error response if not successful
                 setErrorMessage(data.message || 'Registration failed');
-                setSuccessMessage(''); // Clear any success messages
+                setSuccessMessage(''); // Clearing any success messages
             }
         } catch (error) {
-            // Handle network or other errors
+            // Handling network or other errors
             setErrorMessage('An error occurred, please try again later.');
-            setSuccessMessage(''); // Clear any success messages
+            setSuccessMessage(''); // Clearing any success messages
         } finally {
-            // Set loading to false when the request is done
+            // Setting loading to false when the request is done
             setIsLoading(false);
         }
     };
