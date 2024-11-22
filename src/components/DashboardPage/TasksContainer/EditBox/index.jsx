@@ -81,7 +81,7 @@ const EditBox = (props) => {
   return (
     <div className="box-background">
       <div className="add-task-container">
-        <h3>Edit Your Task</h3>
+        <h3>Edit Your Notes</h3>
         <form action="" onSubmit={editTask} className="editBox-form">
           <div className="task-input">
             <label htmlFor="task-title-input">Task Title</label>
