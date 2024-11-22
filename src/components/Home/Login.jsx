@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Cookies from 'js-cookie';
 import './login.css'; // Ensure your CSS is correctly imported
 import { useNavigate } from 'react-router-dom';
+import { FetchedContext } from '../../App';
 
 function Login({ setIsLogin }) {
   const [email, setEmail] = useState('');
@@ -9,7 +10,26 @@ function Login({ setIsLogin }) {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false); // Loading state
+  const { tasks=[], setTasks, notify } =
+  useContext(FetchedContext);
   const navigate = useNavigate()
+
+  const fetchData = async () => {
+    const token = Cookies.get("token");
+    try {
+      const response = await fetch("https://oscowbackend-production.up.railway.app/api/todos", {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      setTasks(data);  // Update context with the new tasks
+    } catch (error) {
+      notify("Error Fetching Tasks from API!", "error");
+    }
+  };
 
 
   const handleSubmit = async (e) => {
@@ -38,6 +58,7 @@ function Login({ setIsLogin }) {
       // If login is successful and there's a token, store it in cookies
       if (response.ok && data.token) {
         Cookies.set('token', data.token, { expires: 7 }); // Store token for 7 days
+        fetchData()
         setSuccessMessage('Login successful!');
         navigate('/')
         setErrorMessage(''); // Clear any error messages
