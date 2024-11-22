@@ -174,7 +174,7 @@ const TasksContainer = () => {
       )}
 
       <div className="heading">
-        <div className="heading-tasks">Tasks</div>
+        <div className="heading-tasks">Notes</div>
         <div className="date">
           {month} {day}, {year}
         </div>
