@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Cookies from 'js-cookie';
-import './login.css'; // Ensuring your CSS is correctly imported
+import './login.css'; // Ensuring CSS is correctly imported
 import { useNavigate } from 'react-router-dom';
 import { FetchedContext } from '../../App';
 
