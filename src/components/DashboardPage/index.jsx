@@ -15,30 +15,30 @@ const DashboardPage = () => {
   // const [page, setPage] = useState(<DashboardContainer/>)
   const [isDash, setIsDash] = useState(true);
   const navigate = useNavigate()
-  const { openUserAccount, setOpenUserAccount, tasks=[], setTasks, notify } =
+  const { openUserAccount, setOpenUserAccount, tasks, setTasks, notify } =
     useContext(FetchedContext);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = Cookies.get("token");
-      try {
-        const response = await fetch("https://oscowbackend-production.up.railway.app/api/todos", {
-          method: "GET",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
-        setTasks(data);  // Update context with the new tasks
-      } catch (error) {
-        notify("Error Fetching Tasks from API!", "error");
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const token = Cookies.get("token");
+  //     try {
+  //       const response = await fetch("https://oscowbackend-production.up.railway.app/api/todos", {
+  //         method: "GET",
+  //         headers: {
+  //           "Authorization": `Bearer ${token}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       });
+  //       const data = await response.json();
+  //       setTasks(data);  // Update context with the new tasks
+  //     } catch (error) {
+  //       notify("Error Fetching Tasks from API!", "error");
+  //     }
+  //   };
 
-    fetchData();  // Re-fetch data when the route changes
+  //   fetchData();  // Re-fetch data when the route changes
 
-  }, []);
+  // }, []);
 
   return (
     <>
