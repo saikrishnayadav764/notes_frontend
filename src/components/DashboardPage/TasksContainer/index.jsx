@@ -8,7 +8,7 @@ import EditBox from "./EditBox";
 import Description from "./Description";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
-const TasksContainer = ({setTasksInDashboard}) => {
+const TasksContainer = () => {
   const [taskBox, setTaskBox] = useState(false);
   // const [isCompletedTab, setIsCompletedTab] = useState(false);
   const [taskStatus, setTaskStaus] = useState("all");
@@ -232,28 +232,28 @@ const TasksContainer = ({setTasksInDashboard}) => {
 
         {searchedTask
           ? searchedTask.map((task) => (
-              <Task setTasksInDashboard={setTasksInDashboard} key={task.todoId} value={task} editTaskBox={editTaskBox} />
+              <Task key={task.todoId} value={task} editTaskBox={editTaskBox} />
             ))
           : taskStatus === "pending"
           ? tasks
               .filter((task) => taskStatus === "pending" && !task.completed)
               .map((task) => (
-                <Task setTasksInDashboard={setTasksInDashboard} key={task.todoId} value={task} editTaskBox={editTaskBox} />
+                <Task key={task.todoId} value={task} editTaskBox={editTaskBox} />
               ))
           : taskStatus === "completed"
           ? tasks
               .filter((task) => taskStatus === "completed" && task.completed)
               .map((task) => (
-                <Task setTasksInDashboard={setTasksInDashboard} key={task.todoId} value={task} editTaskBox={editTaskBox} />
+                <Task key={task.todoId} value={task} editTaskBox={editTaskBox} />
               ))
           : filterTaskCategory !== "all"
           ? tasks
               .filter((task) => task.category === filterTaskCategory)
               .map((task) => (
-                <Task setTasksInDashboard={setTasksInDashboard} key={task.todoId} value={task} editTaskBox={editTaskBox} />
+                <Task key={task.todoId} value={task} editTaskBox={editTaskBox} />
               ))
           : tasks.map((task) => (
-              <Task setTasksInDashboard={setTasksInDashboard} key={task.todoId} value={task} editTaskBox={editTaskBox} />
+              <Task key={task.todoId} value={task} editTaskBox={editTaskBox} />
             ))}
       </div>
 {/* Add Task Button */}
@@ -267,8 +267,8 @@ const TasksContainer = ({setTasksInDashboard}) => {
       </div>
 
       {/* Rendering Boxes */}
-      {taskBox && <AddTaskBox setTasksInDashboard={setTasksInDashboard} taskBox={taskBox} setTaskBox={setTaskBox} />}
-      {editBox && <EditBox  {...editBoxProps} />}
+      {taskBox && <AddTaskBox taskBox={taskBox} setTaskBox={setTaskBox} />}
+      {editBox && <EditBox {...editBoxProps} />}
       {isDescriptionOpen && <Description editTaskBox={editTaskBox} />}
     </div>
   );
