@@ -1,64 +1,106 @@
-import React, { useContext, useEffect } from "react";
-import "./dashboardContainer.styles.css";
-import PieChartComponent from "./Pie";
-import { FetchedContext } from "../../../App";
+import React, { useState, createContext, useContext, useEffect, useLayoutEffect } from "react";
+import "./DashboardPage.styles.css";
+import DashNav from "./DashNav";
+import DashboardContainer from "./DashboardContainer";
+import TasksContainer from "./TasksContainer";
+import UserAccount from "./UserAccount";
+import { FetchedContext } from "../../App";
+import userImg from "../../assets/images/userImg.png";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-const DashboardContainer = ({tasks}) => {
-  const { setTasks, notify } = useContext(FetchedContext) || {};
+const DashContext = createContext();
 
- 
-  let completed = tasks ? tasks.filter(task => task.completed).length : 0;
-  let pending = tasks ? tasks.filter(task => !task.completed).length : 0;
+const DashboardPage = () => {
+  // const [page, setPage] = useState(<DashboardContainer/>)
+  const [isDash, setIsDash] = useState(true);
+  const navigate = useNavigate();
+  const [tasks, setTasks] = useState(null);
+  const { openUserAccount, setOpenUserAccount, notify } =
+    useContext(FetchedContext);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const token = Cookies.get("token");
-  //     try {
-  //       const response = await fetch("https://oscowbackend-production.up.railway.app/api/todos", {
-  //         method: "GET",
-  //         headers: {
-  //           "Authorization": `Bearer ${token}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
-  //       const data = await response.json();
-  //       setTasks(data);  // Update context with the new tasks
-  //     } catch (error) {
-  //       notify("Error Fetching Notes from API!", "error");
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = Cookies.get("token");
+      try {
+        const response = await fetch("https://oscowbackend-production.up.railway.app/api/todos", {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        setTasks(data);  // Update context with the new tasks
+      } catch (error) {
+        // notify("Error Fetching Tasks from API!", "error");
+      }
+    };
 
-  //   fetchData();  // Re-fetch data when the route changes
+    fetchData();  // Re-fetch data when the route changes
 
-  // }, []);
+  }, [tasks && tasks.length]);
 
   return (
-    <div className="dashboard-container" id="dash-container">
-      <div className="dash-heading">
-        <h2>Dashboard</h2>
-        <p>See your overall Metrics</p>
-      </div>
-      <div className="status-container">
-        <div className="total-tasks task-status">
-            <h1>{tasks?tasks.length:0}</h1>
-            <p>Total Notes</p>
+    <>
+      <DashContext.Provider value={{ isDash, setIsDash }}>
+        <div className="dashboard-page">
+          <DashNav />
+
+          <div className="dash-container-content">
+            {isDash && tasks && <DashboardContainer tasks={tasks}/>}
+            {!isDash && tasks &&  <TasksContainer setTasksInDashboard={setTasks} />}
+            {/* {isDash ? <DashboardContainer tasks={tasks}/> : <TasksContainer />} */}
+            { tasks &&  <UserAccount tasks={tasks}/>}
+          </div>
         </div>
-        <div className="pending-tasks task-status">
-        <h1>{pending}</h1>
-            <p>Pending Notes</p>
+      </DashContext.Provider>
+
+      {openUserAccount && (
+        <div
+          className="user-box-background"
+          onClick={() => {
+            setOpenUserAccount(!openUserAccount);
+          }}
+        >
+          <div className="user-account-container" id="user-account">
+            <div className="user-image">
+              <img src={userImg} alt="" />
+            </div>
+            <div className="user-profile-name">Hi, User</div>
+            <div className="notification-container">
+              <div className="notification-heading">Notifications</div>
+              <div className="notification-box">
+                {tasks
+                  .filter((task) => task.alert === true)
+                  .map((task, index) => {
+                    return (
+                      <div className="notifications" key={index}>
+                        <h5>{task.title}</h5>
+                        <p>
+                          {task.date}, {task.time}
+                        </p>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+
+            <button onClick={() => {
+              Cookies.remove('token');
+              if (!Cookies.get("token")) {
+                navigate("/")
+                localStorage.clear();
+              }
+            }} style={{ border: "none", cursor: "pointer" }} className="logout" to="/">
+              Logout
+            </button>
+          </div>
         </div>
-        <div className="completed-tasks task-status">
-        <h1>{completed}</h1>
-            <p>Complete Notes</p>
-        </div>
-      </div>
-      <h2 className="chart-heading">
-        Performance
-      </h2>
-      <PieChartComponent tasks ={tasks} completed={completed} pending={pending}/>
-    </div>
+      )}
+    </>
   );
 };
 
-export default DashboardContainer;
+export { DashContext };
+export default DashboardPage;
