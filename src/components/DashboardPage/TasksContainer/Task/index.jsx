@@ -6,7 +6,7 @@ import "./Task.styles.css";
 import { FetchedContext } from "../../../../App";
 import Cookies from "js-cookie";
 
-const Task = ({ value, editTaskBox, setTasksInDashboard }) => {
+const Task = ({ value, editTaskBox }) => {
   const { deleteTask, tasks, setTasks, notify,showDescription } = useContext(FetchedContext);
 
   const [isChecked, setIsChecked] = useState(value.completed);
@@ -35,7 +35,6 @@ const Task = ({ value, editTaskBox, setTasksInDashboard }) => {
         });
         localStorage.setItem("tasks", JSON.stringify(updatedTasks));
         setTasks(updatedTasks);
-        setTasksInDashboard(updatedTasks)
         if(isChecked){
           notify("Task Updated Successfully! Task Moved to Pending!", "success")
         }else{
