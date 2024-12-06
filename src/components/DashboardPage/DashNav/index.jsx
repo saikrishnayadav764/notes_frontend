@@ -28,6 +28,7 @@ const DashNav = () => {
         <div className={`dash-tog-btn tasks-btn ${isDash? "": "active-toggle"}`} onClick={taskClick} >
           Notes
         </div>
+        <h1 style={{color:"red"}}>Plss refresh for new metrics</h1>
       </div>
 
       <div className="user-account-name">
